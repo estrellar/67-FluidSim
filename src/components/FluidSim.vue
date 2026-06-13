@@ -54,7 +54,7 @@ let lastHigherWrist: 'left' | 'right' = 'left';
 let emitRate = 0;
 
 watch(gameState, (val) => {
-    if (val === 'running') emitRate = 4;
+    if (val === 'running') emitRate = 0;
 });
 
 function sweat() {
@@ -86,9 +86,9 @@ function sweat() {
         if (previous && dt > 0) {
             const pk = previous.keypoints[emitIdx];
             vx = emitIdx === POSE_LANDMARKS.RIGHT_EYE
-                ? (kp.x - pk.x) * 2 / dt - 0.7
-                : (kp.x - pk.x) * 2 / dt + 0.7;
-            vy = -(kp.y - pk.y) * 2 / dt;
+                ? (kp.x - pk.x)*2/dt - 0.7
+                : (kp.x - pk.x)*2/dt + 0.7;
+            vy = -(kp.y - pk.y)*2/dt;
         }
         for (let i = 0; i < emitRate; i++) {
             spawn(state, x + (Math.random() - 0.5) * 1e-3, y + (Math.random() - 0.5) * 1e-3, vx, vy, 10);
